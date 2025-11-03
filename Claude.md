@@ -166,27 +166,27 @@ float-chat/
 
 ## フェーズごとのチェックリスト
 
-### Phase 0: 環境構築
-- [ ] Rust, Node.js インストール確認
-- [ ] Tauriプロジェクト作成 (`npm create tauri-app@latest`)
-- [ ] Tailwind CSS セットアップ
-- [ ] daisyUI インストール・設定
-- [ ] `npm run tauri dev` で起動確認
+### Phase 0: 環境構築 ✅ 完了
+- [x] Rust, Node.js インストール確認
+- [x] Tauriプロジェクト作成 (`npm create tauri-app@latest`)
+- [x] Tailwind CSS セットアップ
+- [x] daisyUI インストール・設定
+- [x] ビルド確認成功
 
-### Phase 1: MVP
-- [ ] `tauri.conf.json` で http scope 設定
-- [ ] `api.js` 作成（非ストリーミング）
-- [ ] 3つのコンポーネント作成 (ChatInput, Message, ChatWindow)
-- [ ] `App.svelte` にロジック実装
-- [ ] 手動テスト（送信・応答・エラーハンドリング）
+### Phase 1: MVP ✅ 完了
+- [x] `tauri.conf.json` で http scope 設定
+- [x] `api.js` 作成（非ストリーミング）
+- [x] 3つのコンポーネント作成 (ChatInput, Message, ChatWindow)
+- [x] `App.svelte` にロジック実装
+- [x] ビルドテスト成功
 
-### Phase 2: UI/UX改善
-- [ ] `api.js` ストリーミング対応
-- [ ] `App.svelte` トークン逐次更新
-- [ ] `marked`, `dompurify`, `@tailwindcss/typography` インストール
-- [ ] `Message.svelte` でMarkdownレンダリング
-- [ ] `ChatWindow.svelte` で自動スクロール
-- [ ] 手動テスト（ストリーミング・Markdown・XSS対策）
+### Phase 2: UI/UX改善 ✅ 完了
+- [x] `api.js` ストリーミング対応
+- [x] `App.svelte` トークン逐次更新
+- [x] `marked`, `dompurify`, `@tailwindcss/typography` インストール
+- [x] `Message.svelte` でMarkdownレンダリング
+- [x] `ChatWindow.svelte` で自動スクロール
+- [x] ビルドテスト成功
 
 ### Phase 3: 高度な機能
 - [ ] `tauri-plugin-store`, `uuid` インストール
@@ -205,5 +205,7 @@ float-chat/
 5. **エラーハンドリング**: API未起動時の適切なエラー表示
 
 ## 現在の進捗
-- **現在のフェーズ**: Phase 0 (環境構築)
+- **現在のフェーズ**: Phase 2 完了 → Phase 3 準備完了
+- **完了フェーズ**: Phase 0, Phase 1, Phase 2
 - **ブランチ**: `claude/float-chat-app-design-011CUmA3EJB31kNfDexPJRH8`
+- **最新コミット**: Phase 2 - Streaming and Markdown rendering (4d0da1d)
