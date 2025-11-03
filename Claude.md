@@ -205,14 +205,15 @@ float-chat/
 5. **エラーハンドリング**: API未起動時の適切なエラー表示
 
 ## 現在の進捗
-- **プロジェクト完了**: 全フェーズ（Phase 0, 1, 2, 3）実装完了 🎉
+- **プロジェクト完了**: 全フェーズ + 拡張機能実装完了 🎉🚀
 - **完了フェーズ**:
   - Phase 0: 環境構築 ✅
   - Phase 1: MVP（基本的なチャット） ✅
   - Phase 2: UI/UX改善（ストリーミング、Markdown） ✅
   - Phase 3: 高度な機能（セッション管理、永続化） ✅
+  - **拡張機能**: コードハイライト、モデル選択、システムプロンプト、エクスポート ✅
 - **ブランチ**: `claude/float-chat-app-design-011CUmA3EJB31kNfDexPJRH8`
-- **最新コミット**: Phase 3 - Session management and settings persistence (94b8957)
+- **最新コミット**: Enhancement features - Code highlighting, model selection, system prompt, and export (3e0d1a0)
 
 ## 実装された機能（全フェーズ完了）
 
@@ -241,3 +242,31 @@ float-chat/
 - tauri-plugin-store によるローカルストレージ
 - チャット履歴の自動保存
 - 設定の自動保存
+
+## 追加機能（拡張版）
+
+### 1. コードシンタックスハイライト
+- highlight.js 統合
+- 100+のプログラミング言語サポート
+- 自動言語検出
+- GitHub Dark テーマ
+- コードブロックの美しい表示
+
+### 2. モデル選択機能
+- 複数モデルのサポート（llama3, llama3.1, llama3.2, mistral, codellama, phi, gemma, qwen）
+- カスタムモデル名の入力
+- モデル選択の永続化
+- 設定モーダルからの簡単切り替え
+
+### 3. システムプロンプト設定
+- カスタムシステムプロンプトの設定
+- AI の動作を細かく制御
+- システムプロンプトの永続化
+- 各会話の最初に自動的に適用
+
+### 4. Markdown エクスポート機能
+- チャット履歴をMarkdownファイルとして保存
+- タイムスタンプ付き
+- ユーザーとアシスタントのメッセージを明確に区別
+- Tauriのネイティブファイル保存ダイアログ
+- エクスポートボタンはサイドバーに配置
