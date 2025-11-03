@@ -188,14 +188,14 @@ float-chat/
 - [x] `ChatWindow.svelte` で自動スクロール
 - [x] ビルドテスト成功
 
-### Phase 3: 高度な機能
-- [ ] `tauri-plugin-store`, `uuid` インストール
-- [ ] Rust側セットアップ (Cargo.toml, main.rs)
-- [ ] `stores.js` 作成（永続化ストア）
-- [ ] `Sidebar.svelte` 作成（セッション管理）
-- [ ] `SettingsModal.svelte` 作成（設定画面）
-- [ ] `App.svelte` リファクタリング（ストア使用）
-- [ ] 手動テスト（セッション切り替え・永続化）
+### Phase 3: 高度な機能 ✅ 完了
+- [x] `tauri-plugin-store`, `@tauri-apps/api`, `uuid` インストール
+- [x] Rust側セットアップ (Cargo.toml, lib.rs)
+- [x] `stores.js` 作成（永続化ストア）
+- [x] `Sidebar.svelte` 作成（セッション管理）
+- [x] `SettingsModal.svelte` 作成（設定画面）
+- [x] `+page.svelte` リファクタリング（ストア使用）
+- [x] ビルドテスト成功
 
 ## 重要な注意事項
 1. **絵文字を使わない**: コードやファイルに絵文字は追加しない
@@ -205,7 +205,39 @@ float-chat/
 5. **エラーハンドリング**: API未起動時の適切なエラー表示
 
 ## 現在の進捗
-- **現在のフェーズ**: Phase 2 完了 → Phase 3 準備完了
-- **完了フェーズ**: Phase 0, Phase 1, Phase 2
+- **プロジェクト完了**: 全フェーズ（Phase 0, 1, 2, 3）実装完了 🎉
+- **完了フェーズ**:
+  - Phase 0: 環境構築 ✅
+  - Phase 1: MVP（基本的なチャット） ✅
+  - Phase 2: UI/UX改善（ストリーミング、Markdown） ✅
+  - Phase 3: 高度な機能（セッション管理、永続化） ✅
 - **ブランチ**: `claude/float-chat-app-design-011CUmA3EJB31kNfDexPJRH8`
-- **最新コミット**: Phase 2 - Streaming and Markdown rendering (4d0da1d)
+- **最新コミット**: Phase 3 - Session management and settings persistence (94b8957)
+
+## 実装された機能（全フェーズ完了）
+
+### コア機能
+- Tauri + Svelte + Tailwind CSS + daisyUI による軽量デスクトップアプリ
+- Ollama/LMStudio ローカルLLMとの通信
+
+### チャット機能（Phase 1-2）
+- リアルタイムストリーミング応答（タイプライター効果）
+- Markdownレンダリング（コードブロック、リストなど）
+- XSS対策（DOMPurify）
+- 自動スクロール
+
+### セッション管理（Phase 3）
+- 複数チャットセッションの作成・切り替え・削除
+- セッションごとの履歴管理
+- セッション一覧をサイドバーに表示
+
+### 設定機能（Phase 3）
+- APIエンドポイント変更（Ollama/LMStudio対応）
+- 設定の永続化（アプリ再起動後も保持）
+- Ollamaプリセット（localhost:11434）
+- LMStudioプリセット（localhost:1234）
+
+### 永続化（Phase 3）
+- tauri-plugin-store によるローカルストレージ
+- チャット履歴の自動保存
+- 設定の自動保存
