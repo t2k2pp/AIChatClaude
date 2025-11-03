@@ -1,17 +1,18 @@
 <script>
   /**
    * Float - Main Chat Application
-   * Phase 1: MVP with basic send/receive functionality
+   * Phase 2: Streaming responses with typewriter effect
    */
   import ChatWindow from '$lib/components/ChatWindow.svelte';
   import ChatInput from '$lib/components/ChatInput.svelte';
-  import { fetchChatResponse } from '$lib/utils/api.js';
+  import { fetchChatResponseStreaming } from '$lib/utils/api.js';
 
   let messages = $state([]); // Array of { role: 'user' | 'assistant', content: string }
   let isLoading = $state(false); // Loading state
 
   /**
    * Handle send event from ChatInput component
+   * Phase 2: Streaming with incremental token updates
    */
   async function handleSend(event) {
     const userMessage = event.detail.text;
@@ -22,23 +23,28 @@
     // Set loading state
     isLoading = true;
 
-    try {
-      // Call Ollama API
-      const response = await fetchChatResponse(messages);
+    // Add an empty assistant message to be filled with streaming tokens
+    messages = [...messages, { role: 'assistant', content: '' }];
+    const assistantMessageIndex = messages.length - 1;
 
-      // Add AI's response to the chat
-      messages = [...messages, { role: 'assistant', content: response }];
+    try {
+      // Call Ollama API with streaming
+      await fetchChatResponseStreaming(
+        messages.slice(0, -1), // Exclude the empty assistant message from the API request
+        (token) => {
+          // Update the assistant message with each new token
+          messages[assistantMessageIndex].content += token;
+          // Trigger reactivity by reassigning the array
+          messages = [...messages];
+        }
+      );
     } catch (error) {
       console.error('Error fetching response:', error);
 
-      // Add error message to chat
-      messages = [
-        ...messages,
-        {
-          role: 'assistant',
-          content: 'Sorry, I encountered an error. Please make sure Ollama is running on http://localhost:11434'
-        }
-      ];
+      // Update the assistant message with error text
+      messages[assistantMessageIndex].content =
+        'Sorry, I encountered an error. Please make sure Ollama is running on http://localhost:11434';
+      messages = [...messages];
     } finally {
       // Reset loading state
       isLoading = false;
@@ -53,7 +59,7 @@
       <h1 class="text-xl font-bold px-4">Float - AI Chat</h1>
     </div>
     <div class="flex-none">
-      <span class="text-sm text-gray-500 px-4">Phase 1: MVP</span>
+      <span class="text-sm text-gray-500 px-4">Phase 2: Streaming + Markdown</span>
     </div>
   </header>
 
