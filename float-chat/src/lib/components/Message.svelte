@@ -1,18 +1,37 @@
 <script>
   /**
    * Message component for displaying individual chat messages
-   * Phase 2: Markdown rendering with XSS protection
+   * Enhanced: Markdown rendering with syntax highlighting
    */
   import { marked } from 'marked';
   import DOMPurify from 'dompurify';
+  import hljs from 'highlight.js';
+  import 'highlight.js/styles/github-dark.css'; // Dark theme for code blocks
 
   export let role; // 'user' or 'assistant'
   export let content; // message text
 
-  // Configure marked for better code highlighting compatibility
+  // Configure marked with syntax highlighting
   marked.setOptions({
     breaks: true, // Convert \n to <br>
     gfm: true, // GitHub Flavored Markdown
+    highlight: function (code, lang) {
+      // Auto-detect language if not specified
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(code, { language: lang }).value;
+        } catch (err) {
+          console.error('Highlight error:', err);
+        }
+      }
+      // Auto-detect language
+      try {
+        return hljs.highlightAuto(code).value;
+      } catch (err) {
+        console.error('Auto-highlight error:', err);
+        return code;
+      }
+    }
   });
 
   // Render and sanitize Markdown content

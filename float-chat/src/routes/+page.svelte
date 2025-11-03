@@ -13,7 +13,9 @@
     activeSessionId,
     activeSessionMessages,
     activeSessionTitle,
-    apiEndpoint
+    apiEndpoint,
+    selectedModel,
+    systemPrompt
   } from '$lib/stores.js';
 
   let isLoading = $state(false); // Loading state
@@ -55,16 +57,28 @@
     const assistantMessageIndex = messages.length - 1;
 
     try {
-      // Call Ollama API with streaming, using endpoint from settings
+      // Prepare messages for API (include system prompt if set)
+      let apiMessages = messages.slice(0, -1); // Exclude the empty assistant message
+
+      // Prepend system prompt if configured
+      if ($systemPrompt && $systemPrompt.trim() !== '') {
+        apiMessages = [
+          { role: 'system', content: $systemPrompt },
+          ...apiMessages
+        ];
+      }
+
+      // Call Ollama API with streaming, using settings
       await fetchChatResponseStreaming(
-        messages.slice(0, -1), // Exclude the empty assistant message from the API request
+        apiMessages,
         (token) => {
           // Update the assistant message with each new token
           messages[assistantMessageIndex].content += token;
           // Trigger reactivity by reassigning the array
           messages = [...messages];
         },
-        $apiEndpoint // Use API endpoint from settings
+        $apiEndpoint, // Use API endpoint from settings
+        $selectedModel // Use selected model from settings
       );
 
       // Persist final messages to store

@@ -190,3 +190,55 @@ export const activeSessionTitle = derived(
     return 'New Chat';
   }
 );
+
+// --- Selected Model Store ---
+/**
+ * Stores the selected model name with persistence
+ */
+const createSelectedModelStore = () => {
+  const { subscribe, set } = writable('llama3'); // Default model
+
+  // Load initial value from persistent store
+  async function load() {
+    const value = await settingsStore.get('selectedModel');
+    if (value) set(value);
+  }
+  load();
+
+  return {
+    subscribe,
+    set: async (value) => {
+      await settingsStore.set('selectedModel', value);
+      await settingsStore.save();
+      set(value);
+    }
+  };
+};
+
+export const selectedModel = createSelectedModelStore();
+
+// --- System Prompt Store ---
+/**
+ * Stores the system prompt with persistence
+ */
+const createSystemPromptStore = () => {
+  const { subscribe, set } = writable(''); // Default: no system prompt
+
+  // Load initial value from persistent store
+  async function load() {
+    const value = await settingsStore.get('systemPrompt');
+    if (value) set(value);
+  }
+  load();
+
+  return {
+    subscribe,
+    set: async (value) => {
+      await settingsStore.set('systemPrompt', value);
+      await settingsStore.save();
+      set(value);
+    }
+  };
+};
+
+export const systemPrompt = createSystemPromptStore();
